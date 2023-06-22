@@ -10,6 +10,7 @@ class DaftspiderSpider(scrapy.Spider):
         daftid = response.css('.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text').extract()[1]
         address = response.css('[data-testid="address"]::text').extract()[0]
         price = response.css('[data-testid="price"] h2::text').extract()[0]
+        propertytype = response.css('[data-testid="property-type"]::text').extract(),
         beds = response.css('[data-testid="beds"]::text').extract()[0]
         baths = response.css('[data-testid="baths"]::text').extract()[0]
         availablefrom = response.css('[data-testid="overview"] li::text').getall()[5]
@@ -23,6 +24,7 @@ class DaftspiderSpider(scrapy.Spider):
             'DaftID' : daftid,
             'Address' : address,
             'Price' : price,
+            'Property_Type' : propertytype,
             'Beds' : beds,
             'Baths' : baths,
             'Available_From' : availablefrom,
