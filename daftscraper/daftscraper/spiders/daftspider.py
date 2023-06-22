@@ -27,7 +27,6 @@ class DaftspiderSpider(CrawlSpider):
         beds = response.css('[data-testid="beds"]::text').extract()[0]
         baths = response.css('[data-testid="baths"]::text').extract()[0]
         avaialablefrom = response.css('[data-testid="overview"] li::text').getall()[5]
-        overview = response.css('[data-testid="overview"] li::text').extract()
         description = response.css('[data-testid="description"]::text').extract()[0]
         datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
         views = response.css('[data-testid="statistics"] p::text').extract()[2]
@@ -39,7 +38,6 @@ class DaftspiderSpider(CrawlSpider):
         items['Beds'] = beds,
         items['Baths'] = baths,
         items['Available_From'] = avaialablefrom,
-        items['Overview'] = overview,
         items['Description'] = description,
         items['Date_Listed'] = datelisted,
         items['Views'] = views

@@ -14,7 +14,6 @@ class DaftscraperItem(scrapy.Item):
     Beds = scrapy.Field()
     Baths = scrapy.Field()
     Available_From = scrapy.Field()
-    Overview = scrapy.Field()
     Description = scrapy.Field()
     Date_Listed = scrapy.Field()
     Views = scrapy.Field()
