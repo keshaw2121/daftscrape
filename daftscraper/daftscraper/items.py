@@ -13,7 +13,6 @@ class DaftscraperItem(scrapy.Item):
     Property_Type = scrapy.Field()
     Beds = scrapy.Field()
     Baths = scrapy.Field()
-    Available_From = scrapy.Field()
     Description = scrapy.Field()
     Date_Listed = scrapy.Field()
     Views = scrapy.Field()
