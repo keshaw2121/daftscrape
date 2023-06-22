@@ -25,12 +25,17 @@ class DaftspiderSpider(CrawlSpider):
         price = response.css('[data-testid="price"] h2::text').extract()[0]
         propertytype = response.css('[data-testid="property-type"]::text').extract()[0]
         beds = response.css('[data-testid="beds"]::text').extract()[0]
-        baths = response.css('[data-testid="baths"]::text').extract()[0]
+
         avaialablefrom = response.css('[data-testid="overview"] li::text').getall()[5]
         description = response.css('[data-testid="description"]::text').extract()[0]
         datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
         views = response.css('[data-testid="statistics"] p::text').extract()[2]
-
+        
+        if beds is not None:
+            baths = response.css('[data-testid="baths"]::text').extract()[0]
+        else:
+            baths = None
+        
         items['DaftID'] = daftid,
         items['Address'] = address,
         items['Price'] = price,
