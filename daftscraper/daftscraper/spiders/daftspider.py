@@ -20,7 +20,10 @@ class DaftspiderSpider(CrawlSpider):
 
         items = DaftscraperItem()
 
-        daftid = response.css('.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text').extract()[1]
+        try:
+            daftid = response.css('.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text').extract()[1]
+        except:
+            daftid = None
         
         try:
             address = response.css('[data-testid="address"]::text').extract()[0]
@@ -33,12 +36,12 @@ class DaftspiderSpider(CrawlSpider):
         try:
             beds =  response.css('[data-testid="beds"]::text').extract()[0]
         except:
-            beds = None
+            beds = 1
 
         try:
             baths = response.css('[data-testid="baths"]::text').extract()[0]
         except:
-            baths = None
+            baths = 1
             
         description = response.css('[data-testid="description"]::text').extract()[0]
         datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
