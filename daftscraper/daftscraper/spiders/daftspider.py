@@ -2,6 +2,8 @@ import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from ..items import DaftscraperItem
+import re
+from datetime import datetime
 
 #https://www.daft.ie/property-for-rent/
 
@@ -18,8 +20,6 @@ class DaftspiderSpider(CrawlSpider):
 
     def parse_item(self, response):
 
-        number_of_beds = 1
-
         items = DaftscraperItem()
 
         try:
@@ -34,29 +34,36 @@ class DaftspiderSpider(CrawlSpider):
         except:
             address = None
 
-        price = response.css('[data-testid="price"] h2::text').extract()[0]
+        try:
+            price_string = response.css('[data-testid="price"] h2::text').extract()[0]
+        except:
+            price_string = None
+
         propertytype = response.css('[data-testid="property-type"]::text').extract()[0]
 
         try:
-            beds =  response.css('[data-testid="beds"]::text').extract()[0]
+            beds =  re.findall(r'\d+', response.css('[data-testid="beds"]::text').extract()[0])[0]
         except:
-            beds = number_of_beds
+            beds = None
 
         try:
-            baths = response.css('[data-testid="baths"]::text').extract()[0]
+            baths = re.findall(r'\d+', response.css('[data-testid="baths"]::text').extract()[0])[0]
         except:
-            baths = number_of_beds
+            baths = None
             
         description = response.css('[data-testid="description"]::text').extract()[0]
+
         datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
-        views = response.css('[data-testid="statistics"] p::text').extract()[2]
+
+        views = int(response.css('[data-testid="statistics"] p::text').extract()[2].replace(',', ''))
+
 
         
         
         items['DaftID'] = daftid,
         items['Url'] = url,
         items['Address'] = address,
-        items['Price'] = price,
+        items['Price'] = price_string,
         items['Property_Type'] = propertytype,
         items['Beds'] = beds,
         items['Baths'] = baths,
