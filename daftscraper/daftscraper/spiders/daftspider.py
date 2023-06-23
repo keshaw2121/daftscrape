@@ -18,12 +18,16 @@ class DaftspiderSpider(CrawlSpider):
 
     def parse_item(self, response):
 
+        number_of_beds = 1
+
         items = DaftscraperItem()
 
         try:
             daftid = response.css('.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text').extract()[1]
         except:
             daftid = None
+
+        url = response.url
         
         try:
             address = response.css('[data-testid="address"]::text').extract()[0]
@@ -36,12 +40,12 @@ class DaftspiderSpider(CrawlSpider):
         try:
             beds =  response.css('[data-testid="beds"]::text').extract()[0]
         except:
-            beds = 1
+            beds = number_of_beds
 
         try:
             baths = response.css('[data-testid="baths"]::text').extract()[0]
         except:
-            baths = 1
+            baths = number_of_beds
             
         description = response.css('[data-testid="description"]::text').extract()[0]
         datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
@@ -50,6 +54,7 @@ class DaftspiderSpider(CrawlSpider):
         
         
         items['DaftID'] = daftid,
+        items['Url'] = url,
         items['Address'] = address,
         items['Price'] = price,
         items['Property_Type'] = propertytype,

@@ -8,6 +8,7 @@ import scrapy
 
 class DaftscraperItem(scrapy.Item):
     DaftID = scrapy.Field()
+    Url = scrapy.Field()
     Address = scrapy.Field()
     Price = scrapy.Field()
     Property_Type = scrapy.Field()
