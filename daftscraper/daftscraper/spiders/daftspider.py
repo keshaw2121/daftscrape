@@ -2,6 +2,7 @@ import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from ..items import DaftscraperItem
+from scrapy.loader import ItemLoader
 import re
 from datetime import datetime
 
@@ -20,55 +21,16 @@ class DaftspiderSpider(CrawlSpider):
 
     def parse_item(self, response):
 
-        items = DaftscraperItem()
+        l = ItemLoader(item = DaftscraperItem(), response = response)
+        l.add_css("DaftID", '.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text')
+        l.add_value("Url", response.url)
+        l.add_css("Address", '[data-testid="address"]::text')
+        l.add_css("Price", '[data-testid="price"] h2::text')
+        l.add_css("Property_Type",'[data-testid="property-type"]::text')
+        l.add_css("Beds", '[data-testid="beds"]::text')
+        l.add_css("Baths", '[data-testid="baths"]::text')
+        l.add_css("Description", '[data-testid="description"]::text')
+        l.add_css("Date_Listed", '[data-testid="statistics"] p::text')
+        l.add_css("Views", '[data-testid="statistics"] p::text')
 
-        try:
-            daftid = response.css('.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text').extract()[1]
-        except:
-            daftid = None
-
-        url = response.url
-        
-        try:
-            address = response.css('[data-testid="address"]::text').extract()[0]
-        except:
-            address = None
-
-        try:
-            price_string = response.css('[data-testid="price"] h2::text').extract()[0]
-        except:
-            price_string = None
-
-        propertytype = response.css('[data-testid="property-type"]::text').extract()[0]
-
-        try:
-            beds =  re.findall(r'\d+', response.css('[data-testid="beds"]::text').extract()[0])[0]
-        except:
-            beds = None
-
-        try:
-            baths = re.findall(r'\d+', response.css('[data-testid="baths"]::text').extract()[0])[0]
-        except:
-            baths = None
-            
-        description = response.css('[data-testid="description"]::text').extract()[0]
-
-        datelisted = response.css('[data-testid="statistics"] p::text').extract()[0]
-
-        views = int(response.css('[data-testid="statistics"] p::text').extract()[2].replace(',', ''))
-
-
-        
-        
-        items['DaftID'] = daftid,
-        items['Url'] = url,
-        items['Address'] = address,
-        items['Price'] = price_string,
-        items['Property_Type'] = propertytype,
-        items['Beds'] = beds,
-        items['Baths'] = baths,
-        items['Description'] = description,
-        items['Date_Listed'] = datelisted,
-        items['Views'] = views
-
-        yield items
+        return l.load_item()

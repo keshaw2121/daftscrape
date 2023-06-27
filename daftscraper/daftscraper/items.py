@@ -3,17 +3,19 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy
 
+from dataclasses import dataclass, field
+from typing import Optional
 
-class DaftscraperItem(scrapy.Item):
-    DaftID = scrapy.Field()
-    Url = scrapy.Field()
-    Address = scrapy.Field()
-    Price = scrapy.Field()
-    Property_Type = scrapy.Field()
-    Beds = scrapy.Field()
-    Baths = scrapy.Field()
-    Description = scrapy.Field()
-    Date_Listed = scrapy.Field()
-    Views = scrapy.Field()
+@dataclass
+class DaftscraperItem:
+    DaftID: Optional[str] = field(default=None)
+    Url: Optional[str] = field(default=None)
+    Address: Optional[str] = field(default=None)
+    Price: Optional[str] = field(default=None)
+    Property_Type: Optional[str] = field(default=None)
+    Beds: Optional[str] = field(default=None)
+    Baths: Optional[str] = field(default=None)
+    Description: Optional[str] = field(default=None)
+    Date_Listed: Optional[str] = field(default=None)
+    Views: Optional[str] = field(default=None)
