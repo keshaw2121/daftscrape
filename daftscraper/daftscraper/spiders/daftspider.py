@@ -3,8 +3,7 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from ..items import DaftscraperItem
 from scrapy.loader import ItemLoader
-import re
-from datetime import datetime
+from itemloaders.processors import TakeFirst, MapCompose, Join
 
 #https://www.daft.ie/property-for-rent/
 
@@ -14,7 +13,7 @@ class DaftspiderSpider(CrawlSpider):
     start_urls = ["https://www.daft.ie/"]
 
     rules = (
-        Rule(LinkExtractor(allow = 'property-for-rent')),
+        Rule(LinkExtractor(allow = 'property-for-rent'), deny = ['overseas-properties-for-rent', 'parking-spaces-for-rent']),
         Rule(LinkExtractor(allow = 'for-rent'), callback = 'parse_item', follow = True)
     )
 
