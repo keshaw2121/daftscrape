@@ -13,7 +13,7 @@ class DaftspiderSpider(CrawlSpider):
     start_urls = ["https://www.daft.ie/"]
 
     rules = (
-        Rule(LinkExtractor(allow = 'property-for-rent'), deny = ['overseas-properties-for-rent', 'parking-spaces-for-rent']),
+        Rule(LinkExtractor(allow = 'property-for-rent', deny = ['overseas', 'parking', 'commercial', 'student'])),
         Rule(LinkExtractor(allow = 'for-rent'), callback = 'parse_item', follow = True)
     )
 
