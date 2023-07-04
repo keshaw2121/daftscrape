@@ -9,13 +9,13 @@ from typing import Optional
 
 @dataclass
 class DaftscraperItem:
-    DaftID: Optional[str] = field(default=None)
-    Url: Optional[str] = field(default=None)
-    Address: Optional[str] = field(default=None)
-    Price: Optional[str] = field(default=None)
-    Property_Type: Optional[str] = field(default=None)
-    Beds: Optional[str] = field(default=None)
-    Baths: Optional[str] = field(default=None)
-    Description: Optional[str] = field(default=None)
-    Date_Listed: Optional[str] = field(default=None)
-    Views: Optional[str] = field(default=None)
+    daftid: Optional[str] = field(default=None)
+    url: Optional[str] = field(default=None)
+    address: Optional[str] = field(default=None)
+    price: Optional[str] = field(default=None)
+    property_type: Optional[str] = field(default=None)
+    beds: Optional[str] = field(default=None)
+    baths: Optional[str] = field(default=None)
+    description: Optional[str] = field(default=None)
+    date_listed: Optional[str] = field(default=None)
+    views: Optional[str] = field(default=None)
