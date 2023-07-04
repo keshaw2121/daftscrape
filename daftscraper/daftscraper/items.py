@@ -11,6 +11,7 @@ from typing import Optional
 class DaftscraperItem:
     daftid: Optional[str] = field(default=None)
     url: Optional[str] = field(default=None)
+    date: Optional[str] = field(default=None)
     address: Optional[str] = field(default=None)
     price: Optional[str] = field(default=None)
     property_type: Optional[str] = field(default=None)
