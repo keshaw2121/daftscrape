@@ -14,7 +14,7 @@ class DaftspiderSpider(CrawlSpider):
 
     rules = (
         Rule(LinkExtractor(allow = 'property-for-rent')),
-        Rule(LinkExtractor(allow = 'for-rent', deny = 'from'), callback = 'parse_item',follow = True)
+        Rule(LinkExtractor(allow = 'for-rent', deny = ['from', 'overseas', 'parking', 'commercial', 'student']), callback = 'parse_item',follow = True)
     )
 
 
