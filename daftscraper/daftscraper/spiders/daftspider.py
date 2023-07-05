@@ -32,7 +32,7 @@ class DaftspiderSpider(CrawlSpider):
 
         loader = ItemLoader(item = DaftscraperItem(), response = response)
         loader.add_css("daftid", daftid_css)
-        loader.add_value("date", date.today())
+        loader.add_value("date_scraped", date.today())
         loader.add_value("url", response.url)
         loader.add_css("address", address_css)
         loader.add_css("price", price_css)
