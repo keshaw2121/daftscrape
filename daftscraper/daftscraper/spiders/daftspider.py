@@ -14,7 +14,7 @@ class DaftspiderSpider(CrawlSpider):
 
     rules = (
         Rule(LinkExtractor(allow = 'property-for-rent')),
-        Rule(LinkExtractor(allow = 'for-rent'), callback = 'parse_item', follow = True)
+        Rule(LinkExtractor(allow = 'for-rent', deny = 'from'), callback = 'parse_item',follow = True)
     )
 
 
@@ -32,15 +32,30 @@ class DaftspiderSpider(CrawlSpider):
 
         loader = ItemLoader(item = DaftscraperItem(), response = response)
         loader.add_css("daftid", daftid_css)
+
+        daft_list = loader.get_collected_values('daftid')
+        if len(daft_list) >= 2:
+            loader.replace_value('daftid', daft_list[1])
+
         loader.add_value("date_scraped", date.today())
         loader.add_value("url", response.url)
         loader.add_css("address", address_css)
+
         loader.add_css("price", price_css)
+        price_list = loader.get_collected_values('price')
+        if len(price_list) >= 2:
+            loader.replace_value('price', price_list[0])
+
+        loader.add_css("price_currency", price_css)
         loader.add_css("property_type",property_type_css)
         loader.add_css("beds", beds_css)
         loader.add_css("baths", baths_css)
         loader.add_css("description", description_css)
         loader.add_css("date_listed", date_listed_css)
         loader.add_css("views", views_css)
+
+        views_list = loader.get_collected_values('views')
+        if len(views_list) >= 4:
+            loader.replace_value('views', views_list[2])
 
         return loader.load_item()

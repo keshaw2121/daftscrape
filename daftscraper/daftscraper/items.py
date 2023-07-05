@@ -11,39 +11,26 @@ from price_parser import Price
 import dateparser
 from w3lib.html import remove_tags
 
-def daftid_clean(daftid_var):
-    return daftid_var[1]
 
-def address_clean(address_var):
-    return address_var[0]
+def extract_number(string):
+    pattern = r'\d+'  # Regular expression pattern to match one or more digits
+    numbers = re.findall(pattern, string)
+    combined_number = ''.join(numbers)
+    return combined_number
 
-def price_clean(price_var):
-    price_var_object = price_var[0]
-    return price_var_object
-
-def price_currency(price_var):
-    price_var_object = price_var
-    price_int = Price.fromString(price_var)
-    currency = price_var_object.currency
+def get_currency(price):
+    price_object = Price.fromstring(price)
+    currency = price_object.currency
     return currency
 
-def date_listed_clean(date_listed_var):
-    date_listed_object = date_listed_var[0]
-    return date_listed_object
-
-def views_clean(views_var):
-    views_var_object = views_var[2]
-    return views_var_object
-
-def extract_numbers(value):
-    pattern = r'\d+'  # Regular expression pattern to match numbers
-    matches = re.findall(pattern, value)
-    return int(matches[0]) if matches else None
+def description_clean(description):
+    description_object = description.replace('\n', '').replace('\r', '').replace('*', '').replace('///', '')
+    return description_object
 
 
 
 class DaftscraperItem(scrapy.Item):
-    daftid = scrapy.Field()
+    daftid = scrapy.Field(input_processor = MapCompose(str.strip, extract_number))
 
     date_scraped = scrapy.Field()
 
@@ -51,18 +38,18 @@ class DaftscraperItem(scrapy.Item):
 
     address = scrapy.Field()
 
-    price = scrapy.Field(
-        input_processor = MapCompose(price_clean)
-    )
+    price = scrapy.Field(input_processor = MapCompose(str.strip, extract_number))
+
+    price_currency = scrapy.Field(input_processor = MapCompose(get_currency))
 
     property_type = scrapy.Field()
 
-    beds = scrapy.Field()
+    beds = scrapy.Field(input_processor = MapCompose(extract_number))
 
-    baths = scrapy.Field()
+    baths = scrapy.Field(input_processor = MapCompose(extract_number))
 
-    description = scrapy.Field()
+    description = scrapy.Field(input_processor = MapCompose(description_clean))
 
-    date_listed = scrapy.Field()
+    date_listed = scrapy.Field(input_processor = MapCompose(dateparser.parse))
     
-    views = scrapy.Field()
+    views = scrapy.Field(input_processor = MapCompose(extract_number))
