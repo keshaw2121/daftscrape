@@ -41,6 +41,8 @@ class DaftspiderSpider(CrawlSpider):
         loader.add_value("url", response.url)
         loader.add_css("address", address_css)
 
+        loader.add_css("rent_frequency", price_css)
+
         loader.add_css("price", price_css)
         price_list = loader.get_collected_values('price')
         if len(price_list) >= 2:
