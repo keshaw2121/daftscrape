@@ -27,6 +27,19 @@ def description_clean(description):
     description_object = description.replace('\n', '').replace('\r', '').replace('*', '').replace('///', '')
     return description_object
 
+def extract_frequency(text):
+    pattern = r'per\s+(week|month)'
+    match = re.search(pattern, text, flags=re.IGNORECASE)
+    
+    if match:
+        frequency = match.group(1).lower()
+        
+        if frequency == 'week':
+            return 'weekly'
+        elif frequency == 'month':
+            return 'monthly'
+    return None
+
 
 
 class DaftscraperItem(scrapy.Item):
@@ -38,9 +51,13 @@ class DaftscraperItem(scrapy.Item):
 
     address = scrapy.Field()
 
+    rent_frequency = scrapy.Field(input_processor = MapCompose(extract_frequency))
+
     price = scrapy.Field(input_processor = MapCompose(str.strip, extract_number))
 
     price_currency = scrapy.Field(input_processor = MapCompose(get_currency))
+    
+    rent_frequency = scrapy.Field(input_processor = MapCompose(extract_frequency))
 
     property_type = scrapy.Field()
 
