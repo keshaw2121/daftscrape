@@ -24,7 +24,7 @@ def get_currency(price):
     return currency
 
 def description_clean(description):
-    description_object = description.replace('\n', '').replace('\r', '').replace('*', '').replace('///', '')
+    description_object = description.replace('\n', '').replace('\r', '').replace('*', '').replace('///', '').replace('\t', '')
     return description_object
 
 def extract_frequency(text):
