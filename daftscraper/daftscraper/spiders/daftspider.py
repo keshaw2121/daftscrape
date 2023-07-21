@@ -1,9 +1,10 @@
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from ..items import DaftscraperItem
+from daftscraper.items import DaftscraperItem
 from scrapy.loader import ItemLoader
 from datetime import date
+from scrapy.exceptions import DropItem
 
 #https://www.daft.ie/property-for-rent/
 
@@ -20,8 +21,8 @@ class DaftspiderSpider(CrawlSpider):
 
     def parse_item(self, response):
 
-        daftid_css = '.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text'
         address_css = '[data-testid="address"]::text'
+        daftid_css = '.DaftIDText__StyledDaftIDParagraph-vbn7aa-0::text'
         price_css = '[data-testid="price"] h2::text'
         property_type_css = '[data-testid="property-type"]::text'
         beds_css = '[data-testid="beds"]::text'
@@ -60,4 +61,9 @@ class DaftspiderSpider(CrawlSpider):
         if len(views_list) >= 4:
             loader.replace_value('views', views_list[2])
 
-        return loader.load_item()
+        item = loader.load_item()
+
+        if not item.get('address'):
+            raise DropItem(f"Data not found in URL: {response.url}")
+        
+        yield item
