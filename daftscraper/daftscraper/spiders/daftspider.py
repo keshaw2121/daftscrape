@@ -32,7 +32,7 @@ class DaftspiderSpider(CrawlSpider):
         views_css = '[data-testid="statistics"] p::text'
 
         loader = ItemLoader(item = DaftscraperItem(), response = response)
-        loader.add_css("daftid", daftid_css, default = 'N/A')
+        loader.add_css("daftid", daftid_css)
 
         daft_list = loader.get_collected_values('daftid')
         if len(daft_list) >= 2:
@@ -49,13 +49,13 @@ class DaftspiderSpider(CrawlSpider):
         if len(price_list) >= 2:
             loader.replace_value('price', price_list[0])
 
-        loader.add_css("price_currency", price_css, default = 'N/A')
-        loader.add_css("property_type",property_type_css, default = 'N/A')
-        loader.add_css("beds", beds_css, default = '1')
-        loader.add_css("baths", baths_css, default = '1')
-        loader.add_css("description", description_css, default = 'Not available')
-        loader.add_css("date_listed", date_listed_css, default = 'N/A')
-        loader.add_css("views", views_css, default = 'N/A')
+        loader.add_css("price_currency", price_css)
+        loader.add_css("property_type",property_type_css)
+        loader.add_css("beds", beds_css)
+        loader.add_css("baths", baths_css)
+        loader.add_css("description", description_css)
+        loader.add_css("date_listed", date_listed_css)
+        loader.add_css("views", views_css)
 
         views_list = loader.get_collected_values('views')
         if len(views_list) >= 4:
