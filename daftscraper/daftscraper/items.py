@@ -45,20 +45,6 @@ def extract_frequency(text):
             return 'monthly'
     return None
 
-def bed_var_defaultvalue(bed_var):
-    if bed_var is None:
-        bed_var = 1
-        return bed_var
-    else:
-        return bed_var
-    
-def bath_var_defaultvalue(bath_var):
-    if bath_var is None:
-        bath_var = 1
-        return bath_var
-    else:
-        return bath_var
-
 
 
 class DaftscraperItem(scrapy.Item):
@@ -80,9 +66,9 @@ class DaftscraperItem(scrapy.Item):
 
     property_type = scrapy.Field()
 
-    beds = scrapy.Field(input_processor = MapCompose(bed_var_defaultvalue, extract_number))
+    beds = scrapy.Field(input_processor = MapCompose(extract_number))
 
-    baths = scrapy.Field(input_processor = MapCompose(bath_var_defaultvalue, extract_number))
+    baths = scrapy.Field(input_processor = MapCompose(extract_number))
 
     description = scrapy.Field(input_processor = MapCompose(description_clean))
 
