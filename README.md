@@ -1,19 +1,19 @@
 # Scrapy Scraper
 
 ## Overview
-This Scrapy scraper is designed to [brief description of what your scraper does]. It can be used to extract data from [website or source] by navigating through its pages and scraping relevant information.
+This Scrapy scraper is designed to read the data from daft.ie website for all the properties listed. It can be used to extract data from daft.ie by navigating through its pages and scraping relevant information.
 
 ## Prerequisites
 Make sure you have the following installed before running the scraper:
 
-- Python [version]
-- Scrapy [version]
+- Python
+- Scrapy
 
 ## Installation
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/yourusername/scrapy-scraper.git
+    git clone https://github.com/keshaw2121/daftscrape.git
     ```
 
 2. Navigate to the project directory:
@@ -48,13 +48,13 @@ Make sure you have the following installed before running the scraper:
 3. Run the scraper:
 
     ```bash
-    scrapy crawl your_spider
+    scrapy crawl daftscraper
     ```
 
 4. The scraped data will be saved to [output directory or format].
 
 ## Customization
-- Modify the spider (`spiders/your_spider.py`) to adapt the scraper to the structure of the target website.
+- Modify the spider (`spiders/daftscraper.py`) to adapt the scraper to the structure of the target website.
 - Explore Scrapy documentation for more advanced configurations and features: [Scrapy Documentation](https://docs.scrapy.org/)
 
 ## Contributing
